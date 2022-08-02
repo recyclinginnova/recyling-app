@@ -10,7 +10,8 @@ A new Flutter project.
 4. Type `flutter run` to launch the app
 	- You can also use an IDE to open the project such as Android Studio or Xcode
 5. Type `git checkout <branch_name>` to switch to the relevant branch
-	- i.e. if you are working on the "barcode scanning feature", use the "barcode-scanner" branch. 
+	- i.e. if you are working on the "barcode scanning feature", use the "barcode-scanner" branch.
+	- You can use `git checkout -b <new_branch_name> to create a new branch if a relevant branch doesn't exist
 6. Now you can make the relevant changes as you like
 	- Make sure you follow the Dart Style guide (link below)
 8. After you've made your changes, type `git add .`
