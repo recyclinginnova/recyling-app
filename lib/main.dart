@@ -4,6 +4,7 @@ import 'package:recyclingapp/screens/barcode_scanner.dart';
 import 'package:recyclingapp/screens/home.dart';
 import 'package:recyclingapp/screens/material_info.dart';
 import 'package:recyclingapp/screens/map.dart';
+import 'package:recyclingapp/widgets/navigation_bar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // intial index so that screens[0] is first screen shown to users
-  int index = 0;
+  int screenIndex = 0;
   // screens which the navbar will redirect to
   List<Widget> screens = [const Home() , const BarcodeScannerScreen(), const Materials(), const Map()];
 
@@ -28,42 +29,11 @@ class _MyAppState extends State<MyApp> {
         title: 'Recycling App',
         theme: _buildTheme(),
         home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Recycling App',
-                style: TextStyle(fontWeight: FontWeight.bold)),
-          ),
-          body: screens[index],
-          // changed font size to be more readable
-          bottomNavigationBar: NavigationBarTheme(
-            data: NavigationBarThemeData(
-              labelTextStyle: MaterialStateProperty.all(
-                const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)
-              ),
-            ), 
-            child: NavigationBar(
-              height: 64,
-              selectedIndex: index,
-              onDestinationSelected: (index) =>
-                  setState(() => this.index = index),
-              destinations: const [
-                NavigationDestination(
-                    icon: Icon(Icons.home), 
-                    label: 'Home'),
-                NavigationDestination(
-                    icon: Icon(Icons.document_scanner_outlined),
-                    // NOTE: better icon needs to be found for barcode scanner (fix later not important now)
-                    label: 'Barcode Scanner'),
-                NavigationDestination(
-                    icon: Icon(Icons.search),
-                    label: 'Materials'),
-                NavigationDestination(
-                    icon: Icon(Icons.location_on),
-                    label: 'Map'),
-              ]),) 
-        ));
+        body: screens[screenIndex],
+        bottomNavigationBar: NavBar(onNav: (screenIndex) => setState(() => this.screenIndex  = screenIndex ))
+        )
+      );
   }
-
-
 
   ThemeData _buildTheme() {
     var baseTheme = ThemeData(primarySwatch: Colors.green);
