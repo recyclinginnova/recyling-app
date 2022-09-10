@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recyclingapp/screens/barcode_scanner.dart';
+import 'package:recyclingapp/screens/home.dart';
+import 'package:recyclingapp/screens/material_info.dart';
+import 'package:recyclingapp/screens/map.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,9 +16,10 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-// NOTE: Currently navbar doesn't relocate to different screens, will fix in future
 class _MyAppState extends State<MyApp> {
+  // intial index so that screens[0] is first screen shown to users
   int index = 0;
+  // screens which the navbar will redirect to
   List<Widget> screens = [const Home() , const BarcodeScannerScreen(), const Materials(), const Map()];
 
   @override
@@ -29,9 +33,15 @@ class _MyAppState extends State<MyApp> {
                 style: TextStyle(fontWeight: FontWeight.bold)),
           ),
           body: screens[index],
-          // NOTE: need to change font of navbar
-          bottomNavigationBar: NavigationBar(
-              height: 60,
+          // changed font size to be more readable
+          bottomNavigationBar: NavigationBarTheme(
+            data: NavigationBarThemeData(
+              labelTextStyle: MaterialStateProperty.all(
+                const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)
+              ),
+            ), 
+            child: NavigationBar(
+              height: 64,
               selectedIndex: index,
               onDestinationSelected: (index) =>
                   setState(() => this.index = index),
@@ -41,6 +51,7 @@ class _MyAppState extends State<MyApp> {
                     label: 'Home'),
                 NavigationDestination(
                     icon: Icon(Icons.document_scanner_outlined),
+                    // NOTE: better icon needs to be found for barcode scanner (fix later not important now)
                     label: 'Barcode Scanner'),
                 NavigationDestination(
                     icon: Icon(Icons.search),
@@ -48,9 +59,11 @@ class _MyAppState extends State<MyApp> {
                 NavigationDestination(
                     icon: Icon(Icons.location_on),
                     label: 'Map'),
-              ]),
+              ]),) 
         ));
   }
+
+
 
   ThemeData _buildTheme() {
     var baseTheme = ThemeData(primarySwatch: Colors.green);
@@ -60,39 +73,6 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-// test for NavBar
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: const Center(child: Text('Placeholder for HomeScreen'),)
-    );
-  }
-}
-
-class Materials extends StatelessWidget {
-  const Materials({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: const Center(child: Text('Placeholder for Materials Screen'),)
-    );
-  }
-}
-
-class Map extends StatelessWidget {
-  const Map({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: const Center(child: Text('Placeholder for Map Screen'),)
-    );
-  }
-}
 
 
